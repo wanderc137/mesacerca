@@ -258,7 +258,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   .section{padding:72px 0}
 }
 </style>
-</head>
+<link rel="stylesheet" href="assets/community.css?v=5"></head>
 <body style="--accent:#F5B301;--accent2:#14F195">
 <div class="grid-overlay"></div>
 <div class="glow one"></div>
@@ -275,6 +275,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
       <a href="#como">Cómo funciona</a>
       <a href="#arquitectura">Arquitectura</a>
       <a href="#docs">Documentación</a>
+      <a href="#comunidad">Comunidad</a>
       <a class="btn btn-ghost" style="padding:9px 15px" href="https://github.com/wanderc137/mesacerca" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </div>
@@ -391,8 +392,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   <div class="wrap">
     <div class="cta-card reveal">
       <div class="kicker" style="justify-content:center">Portfolio · 21 proyectos</div>
-      <h2>¿Construimos algo así?</h2>
-      <p>¿Tenés un local o una red de reparto? MesaCerca es la base para operar sin depender de otro gigante.</p>
+      <h2>¿Te animás?</h2>
+      <p>Usá esto como base y referencia para construir un delivery local de tres lados con pagos, repartidores y comercios. Este proyecto es la prueba de que se puede hacer con componentes reales.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="https://wanderc137.github.io/" target="_blank" rel="noopener">Ver todos los proyectos <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="https://github.com/wanderc137/mesacerca" target="_blank" rel="noopener">Explorar el código</a>
@@ -444,5 +445,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 })();
 </script>
+
+<script>window.PORTFOLIO_COMMUNITY = {"account": "wanderc137", "repo": "mesacerca", "coinNamespace": "wanderc137-mesacerca-coins-v1", "faqs": [{"q": "¿Qué es?", "a": "Un delivery local de tres lados: cliente, comercio y repartidor, con Next.js, PostgreSQL y Expo."}, {"q": "¿Qué pagos soporta?", "a": "Mercado Pago Checkout Pro, Transbank Webpay Plus y efectivo; el modo mock sirve para demo."}, {"q": "¿Está completo?", "a": "Es una copia saneada y podada: faltan <code>schema.prisma</code>, scripts y partes de lib/components; el README lo declara."}, {"q": "¿Cómo se ejecuta?", "a": "Con <code>npm install</code> y <code>npm run dev</code>; las variables están en <code>.env.example</code>."}, {"q": "¿Cuáles son los límites?", "a": "No es producción: faltan pruebas, despliegue y piezas del código; es una base de diseño."}]};</script>
+<script src="assets/community.js?v=5" defer></script>
 </body>
 </html>
