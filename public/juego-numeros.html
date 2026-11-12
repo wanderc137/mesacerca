@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Números en letras · Juego para niños</title>
+<meta name="theme-color" content="#fff7ec">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔢</text></svg>">
+<style>
+  :root {
+    --bg: #fff7ec;
+    --bg-2: #ffe8cf;
+    --ink: #16302b;
+    --muted: #647771;
+    --orange: #ff6b35;
+    --orange-dark: #d94a17;
+    --teal: #0f766e;
+    --green: #15803d;
+    --green-bg: #dcfce7;
+    --green-border: #86efac;
+    --red: #b91c1c;
+    --red-bg: #fee2e2;
+    --red-border: #fca5a5;
+    --blue-bg: #e0f2fe;
+    --blue-border: #7dd3fc;
+    --card: #ffffff;
+    --line: #eadfd2;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { min-height: 100%; }
+
+  body {
+    margin: 0;
+    padding: 18px 16px 28px;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 8% 8%, rgba(255, 173, 102, .35), transparent 34%),
+      radial-gradient(circle at 92% 12%, rgba(45, 212, 191, .22), transparent 32%),
+      radial-gradient(circle at 50% 100%, rgba(255, 214, 153, .5), transparent 42%),
+      linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .app {
+    width: min(980px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ---------- Barra superior ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 2px 4px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-weight: 900;
+    letter-spacing: -.02em;
+  }
+
+  .brand .logo {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: 0 8px 18px -10px rgba(22, 48, 43, .5);
+    font-size: 1.3rem;
+  }
+
+  .stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .75);
+    border: 1px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 6px 16px -12px rgba(22, 48, 43, .5);
+    font-size: .92rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .chip b { font-weight: 900; color: var(--teal); }
+
+  button.chip {
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .15s, transform .1s;
+  }
+  button.chip:hover { background: #fff; }
+  button.chip:active { transform: translateY(1px); }
+
+  /* ---------- Tarjeta ---------- */
+  .card {
+    position: relative;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 36px;
+    padding: clamp(20px, 4vw, 46px);
+    box-shadow: 0 30px 70px -34px rgba(22, 48, 43, .45);
+  }
+
+  .card::before,
+  .card::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card::before {
+    width: 220px; height: 220px;
+    right: -90px; top: -90px;
+    background: radial-gradient(circle, rgba(255, 173, 102, .28), transparent 68%);
+  }
+  .card::after {
+    width: 260px; height: 260px;
+    left: -120px; bottom: -130px;
+    background: radial-gradient(circle, rgba(45, 212, 191, .2), transparent 68%);
+  }
+
+  .card > * { position: relative; z-index: 1; }
+
+  /* ---------- Dificultad ---------- */
+  .levels {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(10px, 2vw, 18px);
+  }
+
+  .levels-label {
+    font-size: .78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+
+  .level {
+    padding: 9px 15px;
+    border-radius: 999px;
+    border: 2px solid var(--line);
+    background: #fffaf3;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: .92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s, transform .1s;
+  }
+
+  .level:hover { border-color: #d8c7b3; }
+  .level:active { transform: translateY(1px); }
+
+  .level[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  /* ---------- Número ---------- */
+  .prompt {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(1rem, 2.4vw, 1.2rem);
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .number {
+    margin: clamp(6px, 1.5vw, 14px) 0 clamp(12px, 2.5vw, 26px);
+    text-align: center;
+    font-size: clamp(5.5rem, 21vw, 12.5rem);
+    font-weight: 900;
+    letter-spacing: -.045em;
+    line-height: .95;
+    color: #123f38;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 7px 0 #ffd9b8;
+    overflow-wrap: anywhere;
+  }
+
+  .number.pop { animation: pop .38s cubic-bezier(.34, 1.56, .64, 1); }
+
+  @keyframes pop {
+    0%   { transform: scale(.9); opacity: .4; }
+    60%  { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  /* ---------- Formulario ---------- */
+  .answer-form {
+    width: min(720px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .answer-form label {
+    font-size: .95rem;
+    font-weight: 800;
+    color: var(--ink);
+    padding-left: 4px;
+  }
+
+  .answer-form input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    background: #fffdf8;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: clamp(1.4rem, 4.2vw, 2.1rem);
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+  }
+
+  .answer-form input::placeholder {
+    color: #b6aa9b;
+    font-weight: 500;
+  }
+
+  .answer-form input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 5px rgba(15, 118, 110, .14);
+    background: #fff;
+  }
+
+  .answer-form input:disabled {
+    background: #f2f7f5;
+    border-color: var(--green-border);
+    color: #14532d;
+  }
+
+  .answer-form input.shake { animation: shake .32s ease; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-7px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .btn {
+    flex: 1 1 150px;
+    min-height: 60px;
+    padding: 14px 22px;
+    border-radius: 18px;
+    border: 0;
+    font-family: inherit;
+    font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s;
+  }
+
+  .btn:active { transform: translateY(3px); }
+
+  .btn.primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 6px 0 var(--orange-dark);
+  }
+  .btn.primary:hover { background: #ff7d4d; }
+  .btn.primary:active { box-shadow: 0 3px 0 var(--orange-dark); }
+
+  .btn.ghost {
+    background: #f5efe6;
+    color: #6b5a48;
+    border: 2px solid var(--line);
+    flex: 0 1 auto;
+  }
+  .btn.ghost:hover { background: #efe6da; }
+
+  .btn:focus-visible,
+  .level:focus-visible,
+  .chip:focus-visible {
+    outline: 3px solid var(--teal);
+    outline-offset: 3px;
+  }
+
+  .btn[hidden] { display: none; }
+
+  /* ---------- Feedback ---------- */
+  .feedback {
+    width: min(720px, 100%);
+    margin: 18px auto 0;
+    padding: 16px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    font-size: clamp(1.02rem, 2.4vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.35;
+    animation: rise .25s ease;
+  }
+
+  .feedback[hidden] { display: none; }
+
+  .feedback.ok {
+    background: var(--green-bg);
+    border-color: var(--green-border);
+    color: #14532d;
+  }
+
+  .feedback.wrong {
+    background: var(--red-bg);
+    border-color: var(--red-border);
+    color: #7f1d1d;
+  }
+
+  .feedback.reveal {
+    background: var(--blue-bg);
+    border-color: var(--blue-border);
+    color: #0c4a6e;
+  }
+
+  .feedback .tag {
+    display: block;
+    font-size: .78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    opacity: .75;
+    margin-bottom: 4px;
+  }
+
+  .feedback .answer {
+    display: block;
+    margin-top: 6px;
+    padding: 2px 0 4px;
+    font-size: clamp(1.6rem, 5.4vw, 2.7rem);
+    font-weight: 900;
+    line-height: 1.12;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  .feedback .hint {
+    display: block;
+    margin-top: 8px;
+    font-size: .95rem;
+    font-weight: 600;
+    opacity: .85;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Pie ---------- */
+  .footer {
+    text-align: center;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #7a6a59;
+    padding: 0 8px;
+  }
+
+  /* ---------- Confeti ---------- */
+  .confetti {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 99;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0%   { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(112vh) rotate(760deg); opacity: .85; }
+  }
+
+  /* ---------- Impresión ---------- */
+  .print-only { display: none; }
+
+  @media print {
+    @page { margin: 16mm; }
+
+    body {
+      padding: 0;
+      background: #fff;
+      color: #000;
+      display: block;
+    }
+
+    .no-print { display: none !important; }
+
+    .app { width: 100%; }
+
+    .card {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .card::before,
+    .card::after { display: none; }
+
+    .print-only { display: block; }
+
+    .print-head {
+      font-size: 11pt;
+      color: #333;
+      border-bottom: 1pt solid #999;
+      padding-bottom: 8pt;
+      margin-bottom: 22pt;
+    }
+
+    .print-head strong { font-size: 14pt; display: block; margin-bottom: 10pt; }
+
+    .number {
+      color: #000;
+      text-shadow: none;
+      font-size: 150pt;
+      margin: 18pt 0;
+      line-height: 1;
+    }
+
+    .print-prompt {
+      margin: 6pt 0 30pt;
+      text-align: center;
+      font-size: 16pt;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .print-lines { margin-top: 10pt; }
+
+    .print-lines .line {
+      height: 40pt;
+      border-bottom: 1.2pt solid #9aa5a1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    body { padding: 10px 10px 20px; }
+    .card { border-radius: 26px; }
+    .brand .logo { width: 36px; height: 36px; }
+    .stats { width: 100%; }
+    .chip { padding: 7px 11px; font-size: .84rem; }
+    .actions { flex-direction: column; }
+    .btn, .btn.ghost { width: 100%; flex: 1 1 auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar no-print">
+      <div class="brand"><span class="logo" aria-hidden="true">🔢</span> Números en letras</div>
+      <div class="stats">
+        <span class="chip">✅ <b id="hits">0</b> aciertos</span>
+        <span class="chip">🔥 racha <b id="streak">0</b></span>
+        <span class="chip">Ronda <b id="round">1</b></span>
+        <button class="chip" id="printBtn" type="button" title="Imprimir este ejercicio">🖨️ Imprimir</button>
+      </div>
+    </header>
+
+    <main class="card">
+      <div class="levels no-print" role="group" aria-label="Dificultad">
+        <span class="levels-label">Dificultad</span>
+        <button class="level" type="button" data-max="20" aria-pressed="false">Hasta 20</button>
+        <button class="level" type="button" data-max="50" aria-pressed="true">Hasta 50</button>
+        <button class="level" type="button" data-max="100" aria-pressed="false">Hasta 100</button>
+        <button class="level" type="button" data-max="1000" aria-pressed="false">Hasta 1.000</button>
+        <button class="level" type="button" data-max="1000000" aria-pressed="false">Hasta 1.000.000</button>
+      </div>
+
+      <div class="print-head print-only">
+        <strong>Números en letras</strong>
+        Nombre: ______________________________ &nbsp;&nbsp; Fecha: __________________
+      </div>
+
+      <p class="prompt no-print">¿Cómo se escribe este número con letras?</p>
+
+      <div class="number" id="number" aria-live="polite">42</div>
+
+      <p class="print-prompt print-only">Escribe este número con letras:</p>
+
+      <form class="answer-form no-print" id="answerForm" autocomplete="off">
+        <label for="answer">Tu respuesta</label>
+        <input
+          id="answer"
+          name="answer"
+          type="text"
+          placeholder="Escríbelo aquí…"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="done"
+          maxlength="120"
+        >
+        <div class="actions">
+          <button class="btn primary" id="mainBtn" type="submit">Comprobar</button>
+          <button class="btn ghost" id="revealBtn" type="button">Ver respuesta</button>
+        </div>
+      </form>
+
+      <div class="feedback no-print" id="feedback" role="status" aria-live="polite" hidden></div>
+
+      <div class="print-lines print-only" aria-hidden="true">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </main>
+
+    <footer class="footer no-print">
+      Números al azar en español · Escribe la respuesta con letras y pulsa Comprobar · También puedes imprimir el ejercicio.
+    </footer>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ Números a letras (0 – 999.999.999) ============ */
+
+  var UNIDADES = [
+    '', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve',
+    'diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete',
+    'dieciocho', 'diecinueve', 'veinte', 'veintiuno', 'veintidós', 'veintitrés',
+    'veinticuatro', 'veinticinco', 'veintiséis', 'veintisiete', 'veintiocho', 'veintinueve'
+  ];
+
+  var DECENAS = ['', '', '', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+
+  var CENTENAS = [
+    '', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos',
+    'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
+  ];
+
+  function grupoATexto(n) {
+    if (n === 0) return '';
+    if (n === 100) return 'cien';
+
+    var partes = [];
+    var centenas = Math.floor(n / 100);
+    var resto = n % 100;
+
+    if (centenas > 0) partes.push(CENTENAS[centenas]);
+
+    if (resto > 0) {
+      if (resto < 30) {
+        partes.push(UNIDADES[resto]);
+      } else {
+        var texto = DECENAS[Math.floor(resto / 10)];
+        if (resto % 10 > 0) texto += ' y ' + UNIDADES[resto % 10];
+        partes.push(texto);
+      }
+    }
+
+    return partes.join(' ');
+  }
+
+  function apocope(texto) {
+    if (texto === 'veintiuno') return 'veintiún';
+    if (texto === 'uno') return 'un';
+    return texto.replace(/uno$/, 'un');
+  }
+
+  function numeroATexto(n) {
+    if (n === 0) return 'cero';
+
+    var millones = Math.floor(n / 1000000);
+    var resto = n % 1000000;
+    var miles = Math.floor(resto / 1000);
+    var unidades = resto % 1000;
+    var partes = [];
+
+    if (millones > 0) {
+      partes.push(millones === 1 ? 'un millón' : apocope(grupoATexto(millones)) + ' millones');
+    }
+
+    if (miles > 0) {
+      partes.push(miles === 1 ? 'mil' : apocope(grupoATexto(miles)) + ' mil');
+    }
+
+    if (unidades > 0) partes.push(grupoATexto(unidades));
+
+    return partes.join(' ');
+  }
+
+  function normalizar(texto) {
+    return texto
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function respuestasValidas(n) {
+    var validas = [numeroATexto(n)];
+    if (n === 100) validas.push('ciento');
+    return validas.map(normalizar);
+  }
+
+  /* ============ Estado ============ */
+
+  var maxActual = 50;
+  var actual = null;
+  var estado = 'esperando'; // esperando | correcto | revelado
+  var intentos = 0;
+  var aciertos = 0;
+  var racha = 0;
+  var ronda = 1;
+  var solucion = '';
+
+  var elNumero = document.getElementById('number');
+  var elForm = document.getElementById('answerForm');
+  var elInput = document.getElementById('answer');
+  var elMainBtn = document.getElementById('mainBtn');
+  var elRevealBtn = document.getElementById('revealBtn');
+  var elFeedback = document.getElementById('feedback');
+  var elHits = document.getElementById('hits');
+  var elStreak = document.getElementById('streak');
+  var elRound = document.getElementById('round');
+  var elPrintBtn = document.getElementById('printBtn');
+  var niveles = Array.prototype.slice.call(document.querySelectorAll('.level'));
+
+  function formatear(n) {
+    return new Intl.NumberFormat('es-CL').format(n);
+  }
+
+  function actualizarMarcadores() {
+    elHits.textContent = aciertos;
+    elStreak.textContent = racha;
+    elRound.textContent = ronda;
+  }
+
+  function nuevoNumero() {
+    var candidato;
+    do {
+      candidato = Math.floor(Math.random() * maxActual) + 1;
+    } while (candidato === actual && maxActual > 1);
+
+    actual = candidato;
+    solucion = numeroATexto(actual);
+    estado = 'esperando';
+    intentos = 0;
+
+    elNumero.textContent = formatear(actual);
+    elNumero.classList.remove('pop');
+    void elNumero.offsetWidth;
+    elNumero.classList.add('pop');
+
+    elInput.value = '';
+    elInput.disabled = false;
+    elInput.classList.remove('shake');
+    elInput.setAttribute('aria-invalid', 'false');
+
+    elMainBtn.textContent = 'Comprobar';
+    elRevealBtn.hidden = false;
+    elRevealBtn.disabled = false;
+
+    elFeedback.hidden = true;
+    elFeedback.className = 'feedback';
+    elFeedback.textContent = '';
+
+    if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+      elInput.focus();
+    }
+  }
+
+  function mostrarFeedback(tipo, html) {
+    elFeedback.className = 'feedback ' + tipo;
+    elFeedback.innerHTML = html;
+    elFeedback.hidden = false;
+  }
+
+  function sonidoAcierto() {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      var ctx = new Ctx();
+      var notas = [523.25, 659.25, 783.99, 1046.5];
+      notas.forEach(function (frecuencia, i) {
+        var osc = ctx.createOscillator();
+        var gan = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = frecuencia;
+        var inicio = ctx.currentTime + i * 0.09;
+        gan.gain.setValueAtTime(0.0001, inicio);
+        gan.gain.exponentialRampToValueAtTime(0.12, inicio + 0.02);
+        gan.gain.exponentialRampToValueAtTime(0.0001, inicio + 0.32);
+        osc.connect(gan);
+        gan.connect(ctx.destination);
+        osc.start(inicio);
+        osc.stop(inicio + 0.34);
+      });
+      setTimeout(function () { ctx.close(); }, 1200);
+    } catch (e) { /* sin sonido */ }
+  }
+
+  function lanzarConfeti() {
+    var colores = ['#ff6b35', '#0f766e', '#fbbf24', '#3b82f6', '#ec4899', '#22c55e'];
+    for (var i = 0; i < 70; i++) {
+      var pieza = document.createElement('div');
+      pieza.className = 'confetti';
+      pieza.style.left = Math.random() * 100 + 'vw';
+      pieza.style.background = colores[Math.floor(Math.random() * colores.length)];
+      pieza.style.width = (6 + Math.random() * 7) + 'px';
+      pieza.style.height = (10 + Math.random() * 9) + 'px';
+      pieza.style.animationDuration = (1.7 + Math.random() * 1.4) + 's';
+      pieza.style.animationDelay = (Math.random() * 0.25) + 's';
+      document.body.appendChild(pieza);
+      (function (nodo) {
+        setTimeout(function () { nodo.remove(); }, 3600);
+      })(pieza);
+    }
+  }
+
+  function acierto() {
+    estado = 'correcto';
+    aciertos += 1;
+    racha += 1;
+    actualizarMarcadores();
+
+    elInput.disabled = true;
+    elInput.setAttribute('aria-invalid', 'false');
+    elMainBtn.textContent = 'Siguiente número →';
+    elMainBtn.focus();
+    elRevealBtn.hidden = true;
+
+    mostrarFeedback(
+      'ok',
+      '<span class="tag">¡Correcto!</span>' +
+      '¡Muy bien! 🎉<span class="answer">' + solucion + '</span>'
+    );
+
+    elNumero.classList.remove('pop');
+    void elNumero.offsetWidth;
+    elNumero.classList.add('pop');
+
+    sonidoAcierto();
+    lanzarConfeti();
+  }
+
+  function fallo() {
+    intentos += 1;
+    racha = 0;
+    actualizarMarcadores();
+
+    elInput.classList.remove('shake');
+    void elInput.offsetWidth;
+    elInput.classList.add('shake');
+    elInput.setAttribute('aria-invalid', 'true');
+
+    var mensaje = '<span class="tag">Casi…</span>' +
+      'Todavía no es correcto. Revisa la ortografía y vuelve a intentarlo.';
+
+    if (intentos >= 2) {
+      mensaje += '<span class="hint">Pista: empieza con «' + solucion.charAt(0) + '» · ' +
+        'tiene ' + solucion.split(' ').length + ' palabra' +
+        (solucion.split(' ').length === 1 ? '' : 's') + '.</span>';
+    }
+
+    mostrarFeedback('wrong', mensaje);
+    elInput.focus();
+    elInput.select();
+  }
+
+  function revelar() {
+    estado = 'revelado';
+    racha = 0;
+    actualizarMarcadores();
+
+    elInput.disabled = true;
+    elMainBtn.textContent = 'Siguiente número →';
+    elMainBtn.focus();
+    elRevealBtn.hidden = true;
+
+    mostrarFeedback(
+      'reveal',
+      '<span class="tag">La respuesta es</span>' +
+      '<span class="answer">' + solucion + '</span>' +
+      '<span class="hint">Cópiala y practícala; en la próxima ronda te toca a ti.</span>'
+    );
+  }
+
+  function siguiente() {
+    ronda += 1;
+    actualizarMarcadores();
+    nuevoNumero();
+  }
+
+  /* ============ Eventos ============ */
+
+  elForm.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+
+    if (estado === 'correcto' || estado === 'revelado') {
+      siguiente();
+      return;
+    }
+
+    var respuesta = normalizar(elInput.value);
+
+    if (!respuesta) {
+      mostrarFeedback('wrong', '<span class="tag">Falta la respuesta</span>Escribe el número con letras antes de comprobar.');
+      elInput.focus();
+      return;
+    }
+
+    if (respuestasValidas(actual).indexOf(respuesta) !== -1) {
+      acierto();
+    } else {
+      fallo();
+    }
+  });
+
+  elRevealBtn.addEventListener('click', function () {
+    if (estado === 'esperando') revelar();
+  });
+
+  elPrintBtn.addEventListener('click', function () {
+    window.print();
+  });
+
+  niveles.forEach(function (boton) {
+    boton.addEventListener('click', function () {
+      maxActual = Number(boton.dataset.max) || 100;
+      niveles.forEach(function (otro) {
+        otro.setAttribute('aria-pressed', String(otro === boton));
+      });
+      ronda = 1;
+      aciertos = 0;
+      racha = 0;
+      actual = null;
+      actualizarMarcadores();
+      nuevoNumero();
+    });
+  });
+
+  /* ============ Arranque ============ */
+
+  actualizarMarcadores();
+  nuevoNumero();
+})();
+</script>
+</body>
+</html>

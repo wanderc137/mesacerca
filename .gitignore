@@ -1,0 +1,108 @@
+# ── Dependencias y artefactos de build ────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+.next/
+out/
+build/
+dist/
+.turbo/
+.vercel/
+*.tsbuildinfo
+
+# ── Entornos y secretos ───────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+!.env.production.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+certs/*
+!certs/.gitkeep
+google-services.json
+GoogleService-Info.plist
+
+# ── Bases de datos y backups ──────────────────────────────────────────────────
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+prisma/dev.db
+prisma/*.db
+prisma/*.db-journal
+backups/
+*.dump
+*.sql.gz
+*.tar.gz
+
+# ── Logs y ejecución local ────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.run/
+.pids/
+*.pid
+
+# ── Testing y cobertura ───────────────────────────────────────────────────────
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+# ── Expo / React Native ───────────────────────────────────────────────────────
+.expo/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/ios/Pods/
+mobile/ios/build/
+
+# ── Capturas antiguas y material de trabajo ───────────────────────────────────
+assets/screenshots/
+docs/screenshots/
+screenshots/
+*.psd
+*.ai
+
+# ── Documentos internos que no se publican ────────────────────────────────────
+PLAN.md
+AUDIT_REPORT.md
+
+# ── Sistema operativo y editores ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.desktop
+.idea/
+*.swp
+*.swo
+
+# ── Higiene de publicación (portfolio) ──────────────────────────────
+PLAN.md
+AUDIT_REPORT.md
+*.log
+.env
+.env.*
+!.env.example
+!.env.sample
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store

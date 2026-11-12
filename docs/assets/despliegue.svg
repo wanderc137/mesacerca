@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-labelledby="title desc">
+  <title id="title">MesaCerca · Diseño de despliegue en producción</title>
+  <desc id="desc">Diagrama de despliegue objetivo: usuarios, Cloudflare, túnel o modo edge con Caddy, VPS con Docker, PostgreSQL interno, volumen de uploads, backups e integraciones externas.</desc>
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0E11"/>
+      <stop offset="1" stop-color="#10151B"/>
+    </linearGradient>
+    <linearGradient id="cf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F48120" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#F48120" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="vps" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#151A21"/>
+      <stop offset="1" stop-color="#0E1318"/>
+    </linearGradient>
+    <pattern id="dots3" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#2B3139"/>
+    </pattern>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#848E9C"/>
+    </marker>
+    <marker id="a3o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#F48120"/>
+    </marker>
+    <marker id="a3g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#F0B90B"/>
+    </marker>
+    <style>
+      .t3 { font-family: Manrope, Inter, 'Segoe UI', Arial, sans-serif; font-weight: 800; fill: #EAECEF; }
+      .s3 { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #848E9C; }
+      .h3 { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; fill: #EAECEF; }
+      .b3 { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #AAB4C0; }
+      .m3 { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; fill: #C7D0DA; }
+      .c3 { fill: #151A21; stroke: #2B3139; stroke-width: 1.3; }
+      .dash3 { fill: #10151B; stroke: #2B3139; stroke-width: 1.2; stroke-dasharray: 6 5; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="940" fill="url(#bg3)"/>
+  <rect width="1500" height="940" fill="url(#dots3)" opacity="0.5"/>
+  <text x="54" y="62" class="t3" font-size="34">Diseño de despliegue en producción</text>
+  <text x="54" y="92" class="s3" font-size="16">Objetivo documentado: VPS Linux + Docker + Cloudflare · no implica que la infraestructura esté contratada o desplegada</text>
+  <rect x="54" y="108" width="92" height="4" rx="2" fill="#F0B90B"/>
+  <rect x="1290" y="42" width="156" height="28" rx="14" fill="#FF7A1A" opacity="0.12" stroke="#FF7A1A" stroke-opacity="0.45"/>
+  <text x="1368" y="61" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FF7A1A">DISEÑO · NO LIVE</text>
+
+  <!-- users -->
+  <rect x="54" y="150" width="300" height="150" rx="14" class="c3"/>
+  <text x="74" y="180" class="h3" font-size="16">Usuarios e internet</text>
+  <text x="74" y="206" class="b3" font-size="13">Cliente · Local · Repartidor</text>
+  <text x="74" y="228" class="b3" font-size="13">Admin / soporte</text>
+  <text x="74" y="254" class="m3" font-size="11" fill="#F0B90B">HTTPS · PWA · Expo</text>
+  <text x="74" y="276" class="b3" font-size="12">Web 443 · API bajo el mismo origen</text>
+
+  <!-- Cloudflare -->
+  <rect x="420" y="150" width="620" height="170" rx="16" fill="url(#cf)" stroke="#F48120" stroke-opacity="0.45"/>
+  <text x="444" y="182" class="h3" font-size="18" fill="#F48120">Cloudflare · borde</text>
+  <text x="444" y="208" class="b3" font-size="13">DNS proxied · SSL/TLS Full (strict) · Always Use HTTPS · TLS 1.2+</text>
+  <text x="444" y="231" class="b3" font-size="13">WAF OWASP · Bot Fight · rate limits de borde · HSTS</text>
+  <text x="444" y="254" class="b3" font-size="13">Cloudflare Access en /admin* · caché solo estáticos/uploads</text>
+  <text x="444" y="284" class="m3" font-size="11" fill="#F48120">bypass de caché: /api/*, /admin, /merchant, /courier, /checkout, /orders</text>
+  <text x="444" y="304" class="b3" font-size="11.5">El origen no se expone directo a internet.</text>
+
+  <path d="M354 225 H414" stroke="#848E9C" stroke-width="1.8" marker-end="url(#a3)"/>
+  <text x="384" y="214" text-anchor="middle" class="m3" font-size="10" fill="#848E9C">443</text>
+
+  <!-- two modes -->
+  <rect x="104" y="370" width="600" height="188" rx="16" class="c3"/>
+  <rect x="104" y="370" width="600" height="40" rx="16" fill="#1E2329"/>
+  <rect x="104" y="396" width="600" height="14" fill="#1E2329"/>
+  <text x="126" y="397" class="h3" font-size="16">Modo A · Cloudflare Tunnel (recomendado)</text>
+  <text x="126" y="434" class="b3" font-size="13">cloudflared abre una conexión saliente a Cloudflare; no hay puertos entrantes.</text>
+  <text x="126" y="457" class="b3" font-size="13">Solo SSH (con allowlist) queda abierto para administración.</text>
+  <text x="126" y="480" class="m3" font-size="11" fill="#0ECB81">sin certificado de origen · sin Caddy obligatorio · menos superficie</text>
+  <text x="126" y="508" class="b3" font-size="12">Ideal para MVP y VPS pequeños. El túnel termina TLS en Cloudflare.</text>
+  <text x="126" y="532" class="b3" font-size="12">Verificar que el body limit no dependa solo de Content-Length.</text>
+
+  <rect x="736" y="370" width="600" height="188" rx="16" class="c3"/>
+  <rect x="736" y="370" width="600" height="40" rx="16" fill="#1E2329"/>
+  <rect x="736" y="396" width="600" height="14" fill="#1E2329"/>
+  <text x="758" y="397" class="h3" font-size="16">Modo B · Edge con Caddy</text>
+  <text x="758" y="434" class="b3" font-size="13">Caddy escucha 80/443 solo para rangos de Cloudflare; certificado Origin CA.</text>
+  <text x="758" y="457" class="b3" font-size="13">SSL/TLS Full (strict) en Cloudflare; firewall restringe el origen.</text>
+  <text x="758" y="480" class="m3" font-size="11" fill="#F0B90B">Caddyfile + cert origen + refresh de rangos</text>
+  <text x="758" y="508" class="b3" font-size="12">Más control y logs locales; más piezas que mantener.</text>
+  <text x="758" y="532" class="b3" font-size="12">Nunca publicar 3000 ni 5432 al host.</text>
+
+  <path d="M730 320 V352 H404 V366" stroke="#F48120" stroke-width="1.8" fill="none" marker-end="url(#a3o)"/>
+  <path d="M1036 320 V352 H1036 V366" stroke="#F48120" stroke-width="1.8" fill="none" marker-end="url(#a3o)"/>
+  <text x="716" y="344" class="m3" font-size="10" fill="#F48120">TLS</text>
+  <text x="1048" y="344" class="m3" font-size="10" fill="#F48120">TLS</text>
+
+  <!-- VPS Docker -->
+  <rect x="104" y="600" width="1000" height="286" rx="18" fill="url(#vps)" stroke="#F0B90B" stroke-opacity="0.35"/>
+  <text x="128" y="632" class="h3" font-size="18">VPS Linux · red interna Docker</text>
+  <text x="128" y="655" class="b3" font-size="12.5">Solo el borde alcanza la app. PostgreSQL no publica puerto. Uploads en volumen persistente.</text>
+
+  <rect x="128" y="680" width="280" height="118" rx="12" fill="#10151B" stroke="#F0B90B" stroke-opacity="0.4"/>
+  <text x="148" y="708" class="h3" font-size="15" fill="#F0B90B">App Next.js standalone</text>
+  <text x="148" y="732" class="b3" font-size="12.5">node server.js · puerto 3000</text>
+  <text x="148" y="753" class="b3" font-size="12.5">usuario no root · healthcheck</text>
+  <text x="148" y="774" class="m3" font-size="11" fill="#848E9C">/api/health cada 30 s</text>
+
+  <rect x="432" y="680" width="280" height="118" rx="12" fill="#10151B" stroke="#1E88E5" stroke-opacity="0.4"/>
+  <text x="452" y="708" class="h3" font-size="15" fill="#1E88E5">PostgreSQL 18</text>
+  <text x="452" y="732" class="b3" font-size="12.5">volumen de datos · TLS</text>
+  <text x="452" y="753" class="b3" font-size="12.5">migraciones forward-only</text>
+  <text x="452" y="774" class="m3" font-size="11" fill="#848E9C">5432 solo red interna</text>
+
+  <rect x="736" y="680" width="344" height="118" rx="12" fill="#10151B" stroke="#0ECB81" stroke-opacity="0.4"/>
+  <text x="756" y="708" class="h3" font-size="15" fill="#0ECB81">Persistencia</text>
+  <text x="756" y="732" class="b3" font-size="12.5">volumen /app/public/uploads/stores</text>
+  <text x="756" y="753" class="b3" font-size="12.5">backup cifrado de BD + uploads</text>
+  <text x="756" y="774" class="m3" font-size="11" fill="#848E9C">fuera del VPS · restore probado</text>
+
+  <rect x="128" y="814" width="952" height="48" rx="10" fill="#1E2329" stroke="#2B3139"/>
+  <text x="148" y="844" class="b3" font-size="12.5">cloudflared o Caddy (según modo) · job de migración antes de arrancar · variables desde .env.production · logs sin secretos</text>
+
+  <path d="M404 558 V594" stroke="#848E9C" stroke-width="1.8" marker-end="url(#a3)"/>
+  <path d="M1036 558 V594" stroke="#848E9C" stroke-width="1.8" marker-end="url(#a3)"/>
+
+  <!-- external integrations -->
+  <rect x="1160" y="600" width="286" height="286" rx="16" class="c3"/>
+  <text x="1182" y="632" class="h3" font-size="16">Servicios externos</text>
+  <g class="b3" font-size="12.5">
+    <text x="1182" y="661">Mercado Pago · Checkout Pro</text>
+    <text x="1182" y="686">Transbank · Webpay Plus</text>
+    <text x="1182" y="711">Didit · KYC / liveness</text>
+    <text x="1182" y="736">Resend · email transaccional</text>
+    <text x="1182" y="761">Twilio · SMS de verificación</text>
+    <text x="1182" y="786">Esri · tiles del mapa</text>
+  </g>
+  <text x="1182" y="820" class="m3" font-size="10.5" fill="#848E9C">salida HTTPS · secretos por entorno</text>
+  <text x="1182" y="842" class="m3" font-size="10.5" fill="#848E9C">webhooks firmados e idempotentes</text>
+  <text x="1182" y="864" class="m3" font-size="10.5" fill="#FF7A1A">pagos reales: pendiente de pruebas</text>
+
+  <path d="M1104 740 H1156" stroke="#848E9C" stroke-width="1.6" marker-end="url(#a3)"/>
+  <text x="1130" y="726" text-anchor="middle" class="m3" font-size="9.5" fill="#848E9C">HTTPS</text>
+
+  <!-- backup -->
+  <rect x="1160" y="150" width="286" height="170" rx="14" class="dash3"/>
+  <text x="1182" y="180" class="h3" font-size="15">Backups y continuidad</text>
+  <text x="1182" y="206" class="b3" font-size="12.5">dump cifrado con passphrase</text>
+  <text x="1182" y="228" class="b3" font-size="12.5">copia fuera del VPS</text>
+  <text x="1182" y="250" class="b3" font-size="12.5">restore con confirmación explícita</text>
+  <text x="1182" y="272" class="b3" font-size="12.5">incluye uploads de portadas</text>
+  <text x="1182" y="298" class="m3" font-size="10.5" fill="#FF7A1A">sin monitoreo externo todavía</text>
+
+  <!-- footer -->
+  <rect x="54" y="906" width="1392" height="24" rx="6" fill="#10151B" stroke="#2B3139"/>
+  <text x="70" y="923" class="b3" font-size="11.5">Checklist de lanzamiento: dominio con SSL Full strict · MFA/KYC/verificación obligatorios · pagos sandbox probados · backups restaurados · WAF y Access activos · pentest y monitoreo.</text>
+</svg>

@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 920" width="1500" height="920" role="img" aria-labelledby="title desc">
+  <title id="title">MesaCerca · Arquitectura de roles y sistemas</title>
+  <desc id="desc">Diagrama de la arquitectura: cuatro roles conectados a la aplicación Next.js, la API, el dominio y PostgreSQL, con integraciones de pagos, KYC, comunicaciones y mapas.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0E11"/>
+      <stop offset="0.55" stop-color="#0B0E11"/>
+      <stop offset="1" stop-color="#10151B"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E2329"/>
+      <stop offset="1" stop-color="#151A21"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8D12F"/>
+      <stop offset="1" stop-color="#F0B90B"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1E2329" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0l10 5-10 5z" fill="#848E9C"/>
+    </marker>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0l10 5-10 5z" fill="#F0B90B"/>
+    </marker>
+    <style>
+      .title { font-family: Manrope, Inter, 'Segoe UI', Arial, sans-serif; font-weight: 800; fill: #EAECEF; }
+      .sub { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #848E9C; }
+      .h { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; fill: #EAECEF; }
+      .body { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #AAB4C0; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; fill: #C7D0DA; }
+      .label { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; letter-spacing: 1.6px; }
+      .card { fill: #151A21; stroke: #2B3139; stroke-width: 1.4; }
+      .soft { fill: #1E2329; stroke: #2B3139; stroke-width: 1; }
+      .gold { fill: #F0B90B; }
+      .green { fill: #0ECB81; }
+      .blue { fill: #1E88E5; }
+      .ember { fill: #FF7A1A; }
+      .muted { fill: #848E9C; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="920" fill="url(#bg)"/>
+  <rect width="1500" height="920" fill="url(#grid)" opacity="0.35"/>
+
+  <text x="56" y="66" class="title" font-size="34">Arquitectura de roles y sistemas</text>
+  <text x="56" y="96" class="sub" font-size="16">MesaCerca · Next.js App Router + PostgreSQL + integraciones externas · versión documentada 2026</text>
+  <rect x="56" y="112" width="92" height="4" rx="2" fill="url(#accent)"/>
+  <text x="1444" y="66" text-anchor="end" class="mono" font-size="13" fill="#F0B90B">MVP · web/PWA + Expo</text>
+  <text x="1444" y="88" text-anchor="end" class="body" font-size="13">Cuatro roles · una sola fuente de verdad</text>
+
+  <!-- Roles -->
+  <text x="56" y="162" class="label" font-size="12" fill="#848E9C">EXPERIENCIAS DE USUARIO</text>
+
+  <g>
+    <rect x="56" y="180" width="268" height="150" rx="14" class="card"/>
+    <rect x="56" y="180" width="5" height="150" rx="2.5" class="gold"/>
+    <circle cx="92" cy="216" r="16" fill="#F0B90B" opacity="0.14"/>
+    <path d="M84 220a8 8 0 1 1 16 0c0 5-8 11-8 11s-8-6-8-11Z" fill="#F0B90B"/>
+    <text x="120" y="214" class="h" font-size="20">Cliente</text>
+    <text x="120" y="236" class="body" font-size="13">Web/PWA + app Expo</text>
+    <text x="78" y="268" class="body" font-size="13">Descubre, pide, paga y sigue</text>
+    <text x="78" y="290" class="body" font-size="13">PIN de entrega · calificación</text>
+    <text x="78" y="312" class="mono" font-size="12" fill="#0ECB81">CUSTOMER</text>
+  </g>
+
+  <g>
+    <rect x="56" y="348" width="268" height="150" rx="14" class="card"/>
+    <rect x="56" y="348" width="5" height="150" rx="2.5" class="green"/>
+    <circle cx="92" cy="384" r="16" fill="#0ECB81" opacity="0.14"/>
+    <path d="M82 390v-12l10-6 10 6v12h-6v-8h-8v8Z" fill="#0ECB81"/>
+    <text x="120" y="382" class="h" font-size="20">Local</text>
+    <text x="120" y="404" class="body" font-size="13">Panel /merchant</text>
+    <text x="78" y="436" class="body" font-size="13">Menú, stock y pedidos en vivo</text>
+    <text x="78" y="458" class="body" font-size="13">Acepta, prepara y despacha</text>
+    <text x="78" y="480" class="mono" font-size="12" fill="#0ECB81">MERCHANT</text>
+  </g>
+
+  <g>
+    <rect x="56" y="516" width="268" height="150" rx="14" class="card"/>
+    <rect x="56" y="516" width="5" height="150" rx="2.5" class="blue"/>
+    <circle cx="92" cy="552" r="16" fill="#1E88E5" opacity="0.16"/>
+    <circle cx="88" cy="556" r="6" fill="none" stroke="#1E88E5" stroke-width="2.4"/>
+    <circle cx="100" cy="556" r="6" fill="none" stroke="#1E88E5" stroke-width="2.4"/>
+    <path d="M88 548l4-5M100 548l-4-5" stroke="#1E88E5" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="120" y="550" class="h" font-size="20">Repartidor</text>
+    <text x="120" y="572" class="body" font-size="13">Panel /courier + app Expo</text>
+    <text x="78" y="604" class="body" font-size="13">Conexión, ofertas y entregas</text>
+    <text x="78" y="626" class="body" font-size="13">Ganancias · verificación KYC</text>
+    <text x="78" y="648" class="mono" font-size="12" fill="#1E88E5">COURIER</text>
+  </g>
+
+  <g>
+    <rect x="56" y="684" width="268" height="150" rx="14" class="card"/>
+    <rect x="56" y="684" width="5" height="150" rx="2.5" class="ember"/>
+    <circle cx="92" cy="720" r="16" fill="#FF7A1A" opacity="0.15"/>
+    <path d="M84 714h16v12H84zM88 714v-4M96 714v-4" fill="none" stroke="#FF7A1A" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="120" y="718" class="h" font-size="20">Admin / soporte</text>
+    <text x="120" y="740" class="body" font-size="13">Panel /admin</text>
+    <text x="78" y="772" class="body" font-size="13">Métricas, KYC y reembolsos</text>
+    <text x="78" y="794" class="body" font-size="13">Auditoría de acciones</text>
+    <text x="78" y="816" class="mono" font-size="12" fill="#FF7A1A">ADMIN · SUPPORT</text>
+  </g>
+
+  <!-- arrows roles to core -->
+  <path d="M324 255 H390" stroke="#F0B90B" stroke-width="1.8" marker-end="url(#arrowGold)" opacity="0.8"/>
+  <path d="M324 423 H390" stroke="#0ECB81" stroke-width="1.8" marker-end="url(#arrow)" opacity="0.8"/>
+  <path d="M324 591 H390" stroke="#1E88E5" stroke-width="1.8" marker-end="url(#arrow)" opacity="0.8"/>
+  <path d="M324 759 H390" stroke="#FF7A1A" stroke-width="1.8" marker-end="url(#arrow)" opacity="0.8"/>
+
+  <!-- Core -->
+  <rect x="390" y="170" width="690" height="664" rx="20" fill="url(#core)" stroke="#2B3139" stroke-width="1.6"/>
+  <rect x="390" y="170" width="690" height="56" rx="20" fill="#1E2329"/>
+  <rect x="390" y="206" width="690" height="20" fill="#1E2329"/>
+  <text x="418" y="205" class="h" font-size="19">Aplicación MesaCerca</text>
+  <text x="1052" y="205" text-anchor="end" class="mono" font-size="12" fill="#F0B90B">Next.js 16 · React 19</text>
+
+  <g>
+    <rect x="418" y="250" width="634" height="82" rx="12" class="soft"/>
+    <text x="438" y="278" class="h" font-size="15">Capa de presentación</text>
+    <text x="438" y="301" class="body" font-size="13">Server Components · layouts por rol · PWA instalable · design system oscuro</text>
+    <text x="438" y="320" class="mono" font-size="11" fill="#848E9C">app/(public) · app/(auth) · app/(dashboard)/merchant · courier · admin</text>
+  </g>
+
+  <g>
+    <rect x="418" y="346" width="305" height="96" rx="12" class="soft"/>
+    <text x="438" y="374" class="h" font-size="15">Server Actions</text>
+    <text x="438" y="397" class="body" font-size="12.5">auth · menu · admin</text>
+    <text x="438" y="417" class="body" font-size="12.5">mfa · kyc · verification</text>
+    <text x="438" y="436" class="mono" font-size="11" fill="#848E9C">validación + revalidatePath</text>
+  </g>
+
+  <g>
+    <rect x="747" y="346" width="305" height="96" rx="12" class="soft"/>
+    <text x="767" y="374" class="h" font-size="15">Route Handlers / API</text>
+    <text x="767" y="397" class="body" font-size="12.5">orders · courier · reviews</text>
+    <text x="767" y="417" class="body" font-size="12.5">payments · mobile · health</text>
+    <text x="767" y="436" class="mono" font-size="11" fill="#848E9C">cookie web o Bearer móvil</text>
+  </g>
+
+  <g>
+    <rect x="418" y="462" width="634" height="138" rx="12" class="soft"/>
+    <text x="438" y="490" class="h" font-size="15">Dominio y servicios</text>
+    <g class="body" font-size="12.5">
+      <text x="438" y="516">auth / JWT · sesiones · tokenVersion</text>
+      <text x="438" y="538">orders · pricing · dispatch · PIN</text>
+      <text x="438" y="560">payments · webhooks · reembolsos</text>
+      <text x="438" y="582">kyc · verification · audit · rate-limit</text>
+      <text x="700" y="516">uploads · request limits · CORS</text>
+      <text x="700" y="538">env validation · health · retention</text>
+      <text x="700" y="560">notifications · email / SMS</text>
+      <text x="700" y="582">Prisma Client · migraciones</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="418" y="620" width="634" height="84" rx="12" fill="#10151B" stroke="#F0B90B" stroke-width="1.2"/>
+    <text x="438" y="648" class="h" font-size="15" fill="#F0B90B">PostgreSQL 18 · Prisma 6.19.3</text>
+    <text x="438" y="671" class="body" font-size="12.5">Migraciones versionadas · TLS verify-full en producción · backups cifrados</text>
+    <text x="438" y="691" class="mono" font-size="11" fill="#848E9C">users · merchants · stores · orders · payments · couriers · kyc · audit</text>
+  </g>
+
+  <g>
+    <rect x="418" y="722" width="634" height="86" rx="12" class="soft"/>
+    <text x="438" y="750" class="h" font-size="15">Controles transversales</text>
+    <text x="438" y="773" class="body" font-size="12.5">CSP y headers · rate limiting · Zod · logs de auditoría · idempotencia</text>
+    <text x="438" y="794" class="body" font-size="12.5">MFA TOTP · KYC Didit · verificación email/teléfono · retención PII</text>
+  </g>
+
+  <!-- Integrations -->
+  <text x="1120" y="162" class="label" font-size="12" fill="#848E9C">INTEGRACIONES</text>
+
+  <g>
+    <rect x="1120" y="180" width="324" height="92" rx="12" class="card"/>
+    <circle cx="1150" cy="214" r="12" fill="#1E88E5" opacity="0.18"/>
+    <text x="1174" y="210" class="h" font-size="16">Mercado Pago</text>
+    <text x="1174" y="232" class="body" font-size="12.5">Checkout Pro · webhook firmado</text>
+    <text x="1174" y="252" class="mono" font-size="11" fill="#848E9C">sandbox / production</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="286" width="324" height="92" rx="12" class="card"/>
+    <circle cx="1150" cy="320" r="12" fill="#F6465D" opacity="0.16"/>
+    <text x="1174" y="316" class="h" font-size="16">Transbank</text>
+    <text x="1174" y="338" class="body" font-size="12.5">Webpay Plus · retorno validado</text>
+    <text x="1174" y="358" class="mono" font-size="11" fill="#848E9C">integración / producción</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="392" width="324" height="92" rx="12" class="card"/>
+    <circle cx="1150" cy="426" r="12" fill="#0ECB81" opacity="0.16"/>
+    <text x="1174" y="422" class="h" font-size="16">Didit KYC</text>
+    <text x="1174" y="444" class="body" font-size="12.5">Liveness · face match · AML</text>
+    <text x="1174" y="464" class="mono" font-size="11" fill="#848E9C">workflow Courier Strict</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="498" width="324" height="92" rx="12" class="card"/>
+    <circle cx="1150" cy="532" r="12" fill="#FF7A1A" opacity="0.16"/>
+    <text x="1174" y="528" class="h" font-size="16">Comunicaciones</text>
+    <text x="1174" y="550" class="body" font-size="12.5">Resend email · Twilio SMS</text>
+    <text x="1174" y="570" class="mono" font-size="11" fill="#848E9C">verificación y avisos</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="604" width="324" height="92" rx="12" class="card"/>
+    <circle cx="1150" cy="638" r="12" fill="#F0B90B" opacity="0.16"/>
+    <text x="1174" y="634" class="h" font-size="16">Mapas</text>
+    <text x="1174" y="656" class="body" font-size="12.5">Leaflet · Esri World Dark Gray</text>
+    <text x="1174" y="676" class="mono" font-size="11" fill="#848E9C">tracking y direcciones</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="710" width="324" height="98" rx="12" fill="#10151B" stroke="#2B3139" stroke-dasharray="5 5"/>
+    <text x="1140" y="738" class="h" font-size="15" fill="#C7D0DA">Infraestructura</text>
+    <text x="1140" y="760" class="body" font-size="12.5">Docker · Caddy · Cloudflare</text>
+    <text x="1140" y="781" class="body" font-size="12.5">Tunnel o Edge · backups</text>
+    <text x="1140" y="799" class="mono" font-size="11" fill="#848E9C">diseño, no desplegado aún</text>
+  </g>
+
+  <!-- connectors integrations -->
+  <path d="M1080 296 H1118" stroke="#848E9C" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1080 336 H1118" stroke="#848E9C" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1080 438 H1118" stroke="#848E9C" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1080 544 H1118" stroke="#848E9C" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1080 650 H1118" stroke="#848E9C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- footer note -->
+  <rect x="56" y="862" width="1388" height="34" rx="8" fill="#10151B" stroke="#2B3139"/>
+  <text x="74" y="884" class="body" font-size="12.5">El navegador y Expo consumen la misma API. Las cookies HttpOnly sirven a la web; el token Bearer de 7 días sirve a la app móvil. Ningún rol accede a datos fuera de su alcance.</text>
+</svg>

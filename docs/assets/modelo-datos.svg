@@ -1,0 +1,340 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" width="1600" height="1120" role="img" aria-labelledby="title desc">
+  <title id="title">MesaCerca · Modelo de datos</title>
+  <desc id="desc">Diagrama entidad-relación con usuarios, direcciones, comercios, locales, menú, pedidos, pagos, repartidores, ofertas, reseñas, eventos y auditoría.</desc>
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0E11"/>
+      <stop offset="1" stop-color="#10151B"/>
+    </linearGradient>
+    <pattern id="grid4" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#1E2329" stroke-width="0.8"/>
+    </pattern>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#848E9C"/>
+    </marker>
+    <marker id="a4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#F0B90B"/>
+    </marker>
+    <style>
+      .t4 { font-family: Manrope, Inter, 'Segoe UI', Arial, sans-serif; font-weight: 800; fill: #EAECEF; }
+      .s4 { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #848E9C; }
+      .h4 { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; fill: #EAECEF; }
+      .f4 { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; fill: #AAB4C0; }
+      .b4 { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #AAB4C0; }
+      .e4 { fill: #151A21; stroke: #2B3139; stroke-width: 1.3; }
+      .k4 { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; letter-spacing: 1.2px; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1120" fill="url(#bg4)"/>
+  <rect width="1600" height="1120" fill="url(#grid4)" opacity="0.4"/>
+
+  <text x="48" y="58" class="t4" font-size="34">Modelo de datos</text>
+  <text x="48" y="88" class="s4" font-size="16">Entidades principales del MVP · PostgreSQL + Prisma · los nombres de campos son los del dominio, no un esquema literal completo</text>
+  <rect x="48" y="104" width="92" height="4" rx="2" fill="#F0B90B"/>
+
+  <g font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="11">
+    <rect x="1180" y="42" width="370" height="62" rx="10" fill="#10151B" stroke="#2B3139"/>
+    <text x="1198" y="64" class="b4" font-size="11.5"><tspan fill="#F0B90B">1:N</tspan> relación · <tspan fill="#F0B90B">1:1</tspan> única · <tspan fill="#F0B90B">FK</tspan> clave foránea</text>
+    <text x="1198" y="86" class="b4" font-size="11.5">Estados y enums se describen en docs/developer.md</text>
+  </g>
+
+  <!-- connectors (behind boxes) -->
+  <g fill="none" stroke="#848E9C" stroke-width="1.5">
+    <!-- User - Address -->
+    <path d="M200 380 V416" marker-end="url(#a4)"/>
+    <!-- User - Merchant -->
+    <path d="M360 230 H396" marker-end="url(#a4)"/>
+    <!-- User - Courier top route -->
+    <path d="M250 140 V112 H1300 V136" marker-end="url(#a4)" stroke-dasharray="5 4"/>
+    <!-- User - KycCase route -->
+    <path d="M360 330 H382 V680 H364" marker-end="url(#a4)" stroke="#848E9C" stroke-dasharray="4 4"/>
+    <!-- User - AuditLog route -->
+    <path d="M360 360 H388 V862 H364" marker-end="url(#a4)" stroke-dasharray="4 4"/>
+    <!-- Merchant - Store -->
+    <path d="M560 330 V366" marker-end="url(#a4)"/>
+    <!-- Store - Category -->
+    <path d="M560 580 V616" marker-end="url(#a4)"/>
+    <!-- Category - MenuItem -->
+    <path d="M560 740 V776" marker-end="url(#a4)"/>
+    <!-- Store - Order -->
+    <path d="M720 390 H756" marker-end="url(#a4)" stroke="#F0B90B" stroke-opacity="0.8"/>
+    <!-- Order - OrderItem -->
+    <path d="M930 400 V436" marker-end="url(#a4)"/>
+    <!-- Order - Payment route right -->
+    <path d="M1100 360 H1120 V700 H1104" marker-end="url(#a4)"/>
+    <!-- Order - DeliveryOffer route -->
+    <path d="M1100 300 H1132 V450 H1136" marker-end="url(#a4)" stroke="#FF7A1A" stroke-opacity="0.8"/>
+    <!-- Order - OrderEvent route -->
+    <path d="M1100 200 H1124 V650 H1136" marker-end="url(#a4)"/>
+    <!-- Courier - DeliveryOffer -->
+    <path d="M1330 340 V376" marker-end="url(#a4)"/>
+    <!-- OrderItem - MenuItem snapshot (dashed) -->
+    <path d="M760 520 H724 V850 H720" marker-end="url(#a4)" stroke-dasharray="4 4" stroke-opacity="0.5"/>
+  </g>
+
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="9.5" fill="#848E9C">
+    <text x="208" y="400">1:N</text>
+    <text x="372" y="218">1:1</text>
+    <text x="286" y="106">1:1 courier.userId</text>
+    <text x="390" y="500">1:N</text>
+    <text x="390" y="820">actor</text>
+    <text x="568" y="350">1:N</text>
+    <text x="568" y="602">1:N</text>
+    <text x="568" y="762">1:N</text>
+    <text x="736" y="382">1:N</text>
+    <text x="938" y="422">1:N</text>
+    <text x="1126" y="540">1:1</text>
+    <text x="1140" y="420">1:N</text>
+    <text x="1140" y="620">1:N</text>
+    <text x="1338" y="364">1:N</text>
+  </g>
+
+  <!-- Column A -->
+  <g>
+    <rect x="40" y="140" width="320" height="240" rx="12" class="e4"/>
+    <rect x="40" y="140" width="320" height="38" rx="12" fill="#F0B90B" opacity="0.12"/>
+    <rect x="40" y="164" width="320" height="14" fill="#F0B90B" opacity="0.12"/>
+    <text x="56" y="164" class="h4" font-size="15" fill="#F0B90B">User</text>
+    <text x="344" y="164" text-anchor="end" class="k4" font-size="9" fill="#848E9C">IDENTIDAD</text>
+    <g class="f4" font-size="11.2">
+      <text x="56" y="200">id · cuid</text>
+      <text x="56" y="220">email · unique</text>
+      <text x="56" y="240">phone · unique, opcional</text>
+      <text x="56" y="260">name · passwordHash</text>
+      <text x="56" y="280">role · CUSTOMER | MERCHANT | COURIER</text>
+      <text x="56" y="300">       ADMIN | SUPPORT</text>
+      <text x="56" y="320">status · ACTIVE | SUSPENDED</text>
+      <text x="56" y="340">tokenVersion · mfaEnabled</text>
+      <text x="56" y="360">emailVerifiedAt · phoneVerifiedAt</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="40" y="420" width="320" height="150" rx="12" class="e4"/>
+    <rect x="40" y="420" width="320" height="34" rx="12" fill="#1E2329"/>
+    <rect x="40" y="442" width="320" height="12" fill="#1E2329"/>
+    <text x="56" y="442" class="h4" font-size="15">Address</text>
+    <g class="f4" font-size="11.2">
+      <text x="56" y="476">id · userId · FK User</text>
+      <text x="56" y="496">label · line1 · comuna</text>
+      <text x="56" y="516">lat · lng · instructions</text>
+      <text x="56" y="536">isDefault · createdAt</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="40" y="610" width="320" height="140" rx="12" class="e4"/>
+    <rect x="40" y="610" width="320" height="34" rx="12" fill="#1E2329"/>
+    <rect x="40" y="632" width="320" height="12" fill="#1E2329"/>
+    <text x="56" y="632" class="h4" font-size="15">KycCase</text>
+    <g class="f4" font-size="11.2">
+      <text x="56" y="666">id · userId · FK User</text>
+      <text x="56" y="686">role · MERCHANT | COURIER</text>
+      <text x="56" y="706">provider · didit</text>
+      <text x="56" y="726">status · reason · reviewedAt</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="40" y="790" width="320" height="150" rx="12" class="e4"/>
+    <rect x="40" y="790" width="320" height="34" rx="12" fill="#1E2329"/>
+    <rect x="40" y="812" width="320" height="12" fill="#1E2329"/>
+    <text x="56" y="812" class="h4" font-size="15">AuditLog</text>
+    <g class="f4" font-size="11.2">
+      <text x="56" y="846">id · actorId · FK User</text>
+      <text x="56" y="866">action · entity · entityId</text>
+      <text x="56" y="886">before · after · JSON</text>
+      <text x="56" y="906">ip · createdAt</text>
+    </g>
+  </g>
+
+  <!-- Column B -->
+  <g>
+    <rect x="400" y="140" width="320" height="190" rx="12" class="e4"/>
+    <rect x="400" y="140" width="320" height="38" rx="12" fill="#0ECB81" opacity="0.1"/>
+    <rect x="400" y="164" width="320" height="14" fill="#0ECB81" opacity="0.1"/>
+    <text x="416" y="164" class="h4" font-size="15" fill="#0ECB81">Merchant</text>
+    <text x="704" y="164" text-anchor="end" class="k4" font-size="9" fill="#848E9C">COMERCIO</text>
+    <g class="f4" font-size="11.2">
+      <text x="416" y="200">id · ownerId · unique FK User</text>
+      <text x="416" y="220">name · legalName · rut</text>
+      <text x="416" y="240">status · PENDING | VERIFIED | SUSPENDED</text>
+      <text x="416" y="260">commissionPlan · KITCHEN | HYBRID | FULL</text>
+      <text x="416" y="280">deliveryMode · OWN | FREELANCE | PLATFORM</text>
+      <text x="416" y="300">rating · coverUrl · logoUrl</text>
+      <text x="416" y="320">stores · createdAt</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="400" y="370" width="320" height="210" rx="12" class="e4"/>
+    <rect x="400" y="370" width="320" height="38" rx="12" fill="#0ECB81" opacity="0.1"/>
+    <rect x="400" y="394" width="320" height="14" fill="#0ECB81" opacity="0.1"/>
+    <text x="416" y="394" class="h4" font-size="15" fill="#0ECB81">Store</text>
+    <g class="f4" font-size="11.2">
+      <text x="416" y="430">id · merchantId · FK Merchant</text>
+      <text x="416" y="450">name · slug · unique</text>
+      <text x="416" y="470">address · comuna · lat · lng</text>
+      <text x="416" y="490">status · DRAFT | ACTIVE | PAUSED | CLOSED</text>
+      <text x="416" y="510">prepTimeMin · radiusKm · minOrder</text>
+      <text x="416" y="530">opensAt · closesAt · cuisine</text>
+      <text x="416" y="550">rating · ratingCount</text>
+      <text x="416" y="570">categories · orders</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="400" y="620" width="320" height="120" rx="12" class="e4"/>
+    <rect x="400" y="620" width="320" height="34" rx="12" fill="#1E2329"/>
+    <rect x="400" y="642" width="320" height="12" fill="#1E2329"/>
+    <text x="416" y="642" class="h4" font-size="15">Category</text>
+    <g class="f4" font-size="11.2">
+      <text x="416" y="676">id · storeId · FK Store</text>
+      <text x="416" y="696">name · position</text>
+      <text x="416" y="716">items · MenuItem[]</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="400" y="780" width="320" height="160" rx="12" class="e4"/>
+    <rect x="400" y="780" width="320" height="34" rx="12" fill="#1E2329"/>
+    <rect x="400" y="802" width="320" height="12" fill="#1E2329"/>
+    <text x="416" y="802" class="h4" font-size="15">MenuItem</text>
+    <g class="f4" font-size="11.2">
+      <text x="416" y="836">id · categoryId · FK Category</text>
+      <text x="416" y="856">name · description · emoji</text>
+      <text x="416" y="876">price · Int CLP · available · stock</text>
+      <text x="416" y="896">position · imageUrl</text>
+      <text x="416" y="916">modifiers · Modifier[] → options</text>
+    </g>
+  </g>
+
+  <!-- Column C -->
+  <g>
+    <rect x="760" y="140" width="340" height="260" rx="12" class="e4"/>
+    <rect x="760" y="140" width="340" height="38" rx="12" fill="#F0B90B" opacity="0.12"/>
+    <rect x="760" y="164" width="340" height="14" fill="#F0B90B" opacity="0.12"/>
+    <text x="776" y="164" class="h4" font-size="15" fill="#F0B90B">Order</text>
+    <text x="1084" y="164" text-anchor="end" class="k4" font-size="9" fill="#848E9C">PEDIDO</text>
+    <g class="f4" font-size="11.2">
+      <text x="776" y="200">id · code · unique</text>
+      <text x="776" y="220">clientRequestId · unique, opcional</text>
+      <text x="776" y="240">customerId · FK User</text>
+      <text x="776" y="260">storeId · FK Store · courierId? · FK Courier</text>
+      <text x="776" y="280">status · paymentStatus · deliveryMode</text>
+      <text x="776" y="300">subtotal · deliveryFee · serviceFee</text>
+      <text x="776" y="320">tip · discount · total · CLP</text>
+      <text x="776" y="340">commissionRate · commissionAmount</text>
+      <text x="776" y="360">courierPayout · distanceKm</text>
+      <text x="776" y="380">pickupPin · deliveryPin · timestamps</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="760" y="440" width="340" height="160" rx="12" class="e4"/>
+    <rect x="760" y="440" width="340" height="34" rx="12" fill="#1E2329"/>
+    <rect x="760" y="462" width="340" height="12" fill="#1E2329"/>
+    <text x="776" y="462" class="h4" font-size="15">OrderItem</text>
+    <g class="f4" font-size="11.2">
+      <text x="776" y="496">id · orderId · FK Order</text>
+      <text x="776" y="516">itemId? · FK MenuItem</text>
+      <text x="776" y="536">nameSnapshot · unitPrice · quantity</text>
+      <text x="776" y="556">modifiers · JSON · notes</text>
+      <text x="776" y="576">precio congelado al crear</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="760" y="640" width="340" height="150" rx="12" class="e4"/>
+    <rect x="760" y="640" width="340" height="34" rx="12" fill="#1E88E5" opacity="0.1"/>
+    <rect x="760" y="662" width="340" height="12" fill="#1E88E5" opacity="0.1"/>
+    <text x="776" y="662" class="h4" font-size="15" fill="#1E88E5">Payment</text>
+    <g class="f4" font-size="11.2">
+      <text x="776" y="696">id · orderId · unique FK Order</text>
+      <text x="776" y="716">provider · MOCK | MERCADOPAGO</text>
+      <text x="776" y="736">           TRANSBANK | CASH</text>
+      <text x="776" y="756">providerRef · status · amount · fee</text>
+      <text x="776" y="776">raw · JSON de la pasarela</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="760" y="830" width="340" height="140" rx="12" class="e4"/>
+    <rect x="760" y="830" width="340" height="34" rx="12" fill="#1E2329"/>
+    <rect x="760" y="852" width="340" height="12" fill="#1E2329"/>
+    <text x="776" y="852" class="h4" font-size="15">Review</text>
+    <g class="f4" font-size="11.2">
+      <text x="776" y="886">id · orderId · FK Order</text>
+      <text x="776" y="906">authorId · FK User</text>
+      <text x="776" y="926">targetType · MERCHANT | COURIER</text>
+      <text x="776" y="946">targetId · rating · comment</text>
+    </g>
+  </g>
+
+  <!-- Column D -->
+  <g>
+    <rect x="1140" y="140" width="390" height="200" rx="12" class="e4"/>
+    <rect x="1140" y="140" width="390" height="38" rx="12" fill="#1E88E5" opacity="0.1"/>
+    <rect x="1140" y="164" width="390" height="14" fill="#1E88E5" opacity="0.1"/>
+    <text x="1156" y="164" class="h4" font-size="15" fill="#1E88E5">Courier</text>
+    <text x="1514" y="164" text-anchor="end" class="k4" font-size="9" fill="#848E9C">LOGÍSTICA</text>
+    <g class="f4" font-size="11.2">
+      <text x="1156" y="200">id · userId · unique FK User</text>
+      <text x="1156" y="220">vehicle · BIKE | MOTORCYCLE | CAR | WALKING</text>
+      <text x="1156" y="240">status · OFFLINE | AVAILABLE | BUSY</text>
+      <text x="1156" y="260">verificationStatus · PENDING | VERIFIED | SUSPENDED</text>
+      <text x="1156" y="280">rating · ratingCount</text>
+      <text x="1156" y="300">currentLat · currentLng · lastSeenAt</text>
+      <text x="1156" y="320">orders · offers · earnings</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="1140" y="380" width="390" height="170" rx="12" class="e4"/>
+    <rect x="1140" y="380" width="390" height="34" rx="12" fill="#FF7A1A" opacity="0.1"/>
+    <rect x="1140" y="402" width="390" height="12" fill="#FF7A1A" opacity="0.1"/>
+    <text x="1156" y="402" class="h4" font-size="15" fill="#FF7A1A">DeliveryOffer</text>
+    <g class="f4" font-size="11.2">
+      <text x="1156" y="436">id · orderId · FK Order</text>
+      <text x="1156" y="456">courierId · FK Courier</text>
+      <text x="1156" y="476">status · PENDING | ACCEPTED | DECLINED</text>
+      <text x="1156" y="496">         EXPIRED | CANCELLED</text>
+      <text x="1156" y="516">score · expiresAt · createdAt</text>
+      <text x="1156" y="536">única oferta activa por pedido</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="1140" y="590" width="390" height="150" rx="12" class="e4"/>
+    <rect x="1140" y="590" width="390" height="34" rx="12" fill="#1E2329"/>
+    <rect x="1140" y="612" width="390" height="12" fill="#1E2329"/>
+    <text x="1156" y="612" class="h4" font-size="15">OrderEvent</text>
+    <g class="f4" font-size="11.2">
+      <text x="1156" y="646">id · orderId · FK Order</text>
+      <text x="1156" y="666">type · actorId · FK User · opcional</text>
+      <text x="1156" y="686">payload · JSON</text>
+      <text x="1156" y="706">createdAt · append-only</text>
+      <text x="1156" y="726">historial y auditoría del pedido</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="1140" y="780" width="390" height="200" rx="12" fill="#10151B" stroke="#2B3139" stroke-dasharray="5 4"/>
+    <text x="1156" y="808" class="h4" font-size="14" fill="#F0B90B">Índices y reglas críticas</text>
+    <g class="b4" font-size="11.5">
+      <text x="1156" y="834">Order(status, createdAt) · Order(storeId, status)</text>
+      <text x="1156" y="854">Order(customerId, createdAt) · Payment(providerRef)</text>
+      <text x="1156" y="874">Store(comuna, status) · Courier(status, lastSeenAt)</text>
+      <text x="1156" y="894">DeliveryOffer(orderId, status) · Review(targetType, targetId)</text>
+      <text x="1156" y="914">Unique: User.email, User.phone, Store.slug, Order.code</text>
+      <text x="1156" y="934">Unique: Payment.orderId, DeliveryOffer activo por pedido</text>
+      <text x="1156" y="954">Precios en CLP enteros · IVA incluido · sin floats</text>
+      <text x="1156" y="974">Geo: lat/lng indexados; PostGIS es una mejora futura</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <rect x="48" y="1060" width="1480" height="30" rx="8" fill="#10151B" stroke="#2B3139"/>
+  <text x="64" y="1080" class="b4" font-size="11.5">El esquema real vive en prisma/schema.prisma y las migraciones. Este mapa prioriza la comprensión del dominio; no reemplaza la fuente de verdad.</text>
+</svg>

@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 980" width="1500" height="980" role="img" aria-labelledby="title desc">
+  <title id="title">MesaCerca · Flujo de pedido, pago y entrega</title>
+  <desc id="desc">Diagrama en cinco fases: pedido del cliente, pago, preparación en el local, asignación y entrega por el repartidor, y cierre con calificación.</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0E11"/>
+      <stop offset="1" stop-color="#10151B"/>
+    </linearGradient>
+    <linearGradient id="phase1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0B90B" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#F0B90B" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="phase2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E88E5" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#1E88E5" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="phase3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0ECB81" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#0ECB81" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="phase4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF7A1A" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#FF7A1A" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="phase5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C7D0DA" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#C7D0DA" stop-opacity="0.02"/>
+    </linearGradient>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#848E9C"/>
+    </marker>
+    <marker id="a2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#F0B90B"/>
+    </marker>
+    <style>
+      .t { font-family: Manrope, Inter, 'Segoe UI', Arial, sans-serif; font-weight: 800; fill: #EAECEF; }
+      .s { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #848E9C; }
+      .h { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-weight: 700; fill: #EAECEF; }
+      .b { font-family: Inter, 'Segoe UI', Arial, sans-serif; fill: #AAB4C0; }
+      .m { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; fill: #C7D0DA; }
+      .card2 { fill: #151A21; stroke: #2B3139; stroke-width: 1.3; }
+      .small { fill: #1E2329; stroke: #2B3139; stroke-width: 1; }
+      .tag { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10.5px; fill: #848E9C; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="980" fill="url(#bg2)"/>
+  <text x="54" y="62" class="t" font-size="34">Flujo de pedido, pago y entrega</text>
+  <text x="54" y="92" class="s" font-size="16">Del carrito al PIN de entrega · cada transición deja un evento auditable · los tiempos son objetivos de diseño</text>
+  <rect x="54" y="108" width="92" height="4" rx="2" fill="#F0B90B"/>
+  <text x="1446" y="62" text-anchor="end" class="m" font-size="13" fill="#F0B90B">ORDER STATE MACHINE</text>
+  <text x="1446" y="86" text-anchor="end" class="b" font-size="13">Web/PWA · API · app móvil</text>
+
+  <!-- Phase headers -->
+  <g>
+    <rect x="54" y="140" width="262" height="620" rx="16" fill="url(#phase1)" stroke="#F0B90B" stroke-opacity="0.28"/>
+    <rect x="342" y="140" width="262" height="620" rx="16" fill="url(#phase2)" stroke="#1E88E5" stroke-opacity="0.28"/>
+    <rect x="630" y="140" width="262" height="620" rx="16" fill="url(#phase3)" stroke="#0ECB81" stroke-opacity="0.28"/>
+    <rect x="918" y="140" width="262" height="620" rx="16" fill="url(#phase4)" stroke="#FF7A1A" stroke-opacity="0.28"/>
+    <rect x="1206" y="140" width="240" height="620" rx="16" fill="url(#phase5)" stroke="#848E9C" stroke-opacity="0.32"/>
+  </g>
+
+  <text x="78" y="176" class="m" font-size="12" fill="#F0B90B">01 · PEDIDO</text>
+  <text x="366" y="176" class="m" font-size="12" fill="#1E88E5">02 · PAGO</text>
+  <text x="654" y="176" class="m" font-size="12" fill="#0ECB81">03 · COCINA</text>
+  <text x="942" y="176" class="m" font-size="12" fill="#FF7A1A">04 · REPARTO</text>
+  <text x="1230" y="176" class="m" font-size="12" fill="#C7D0DA">05 · CIERRE</text>
+
+  <!-- Phase 1 cards -->
+  <g>
+    <rect x="76" y="198" width="218" height="92" rx="10" class="card2"/>
+    <text x="92" y="224" class="h" font-size="15">Cliente descubre</text>
+    <text x="92" y="247" class="b" font-size="12.5">Home, búsqueda, comuna</text>
+    <text x="92" y="267" class="b" font-size="12.5">y cocina; locales activos</text>
+  </g>
+  <g>
+    <rect x="76" y="310" width="218" height="104" rx="10" class="card2"/>
+    <text x="92" y="336" class="h" font-size="15">Menú y carrito</text>
+    <text x="92" y="359" class="b" font-size="12.5">Categorías, modificadores</text>
+    <text x="92" y="379" class="b" font-size="12.5">stock, notas y propina</text>
+    <text x="92" y="399" class="tag">subtotal en CLP enteros</text>
+  </g>
+  <g>
+    <rect x="76" y="434" width="218" height="120" rx="10" class="card2"/>
+    <text x="92" y="460" class="h" font-size="15">Checkout</text>
+    <text x="92" y="483" class="b" font-size="12.5">Dirección o retiro, pago</text>
+    <text x="92" y="503" class="b" font-size="12.5">y desglose transparente</text>
+    <text x="92" y="527" class="tag">clientRequestId (idempotencia)</text>
+  </g>
+  <g>
+    <rect x="76" y="574" width="218" height="110" rx="10" fill="#10151B" stroke="#F0B90B" stroke-width="1.2"/>
+    <text x="92" y="600" class="h" font-size="15" fill="#F0B90B">Servidor valida</text>
+    <text x="92" y="623" class="b" font-size="12.5">Precios, ítems, opciones,</text>
+    <text x="92" y="643" class="b" font-size="12.5">mínimo, comuna y distancia</text>
+    <text x="92" y="667" class="tag">nunca confía en el cliente</text>
+  </g>
+  <g>
+    <rect x="76" y="704" width="218" height="36" rx="18" fill="#F0B90B" opacity="0.12" stroke="#F0B90B" stroke-opacity="0.4"/>
+    <text x="185" y="727" text-anchor="middle" class="m" font-size="11" fill="#F0B90B">PENDING_PAYMENT</text>
+  </g>
+
+  <!-- Phase 2 cards -->
+  <g>
+    <rect x="364" y="198" width="218" height="150" rx="10" class="card2"/>
+    <text x="380" y="224" class="h" font-size="15">Proveedor de pago</text>
+    <rect x="380" y="238" width="186" height="24" rx="5" class="small"/>
+    <text x="390" y="255" class="b" font-size="11.5">Demo / mock</text>
+    <text x="556" y="255" text-anchor="end" class="tag">sin pasarela</text>
+    <rect x="380" y="266" width="186" height="24" rx="5" class="small"/>
+    <text x="390" y="283" class="b" font-size="11.5">Mercado Pago</text>
+    <text x="556" y="283" text-anchor="end" class="tag">Checkout Pro</text>
+    <rect x="380" y="294" width="186" height="24" rx="5" class="small"/>
+    <text x="390" y="311" class="b" font-size="11.5">Transbank</text>
+    <text x="556" y="311" text-anchor="end" class="tag">Webpay Plus</text>
+    <rect x="380" y="322" width="186" height="20" rx="5" class="small"/>
+    <text x="390" y="336" class="b" font-size="11.5">Efectivo</text>
+  </g>
+  <g>
+    <rect x="364" y="368" width="218" height="94" rx="10" class="card2"/>
+    <text x="380" y="394" class="h" font-size="15">Webhook / retorno</text>
+    <text x="380" y="417" class="b" font-size="12.5">Firma, monto, moneda</text>
+    <text x="380" y="437" class="b" font-size="12.5">e idempotencia</text>
+  </g>
+  <g>
+    <rect x="364" y="482" width="218" height="88" rx="10" fill="#10151B" stroke="#1E88E5" stroke-width="1.2"/>
+    <text x="380" y="508" class="h" font-size="15" fill="#1E88E5">Resultado</text>
+    <text x="380" y="531" class="b" font-size="12.5">PAID online · efectivo queda</text>
+    <text x="380" y="551" class="b" font-size="12.5">pendiente hasta la entrega</text>
+  </g>
+  <g>
+    <rect x="364" y="590" width="218" height="88" rx="10" class="card2"/>
+    <text x="380" y="616" class="h" font-size="15">Registro Payment</text>
+    <text x="380" y="639" class="b" font-size="12.5">provider, referencia, estado</text>
+    <text x="380" y="659" class="b" font-size="12.5">monto y payload crudo</text>
+  </g>
+  <g>
+    <rect x="364" y="704" width="218" height="36" rx="18" fill="#1E88E5" opacity="0.12" stroke="#1E88E5" stroke-opacity="0.4"/>
+    <text x="473" y="727" text-anchor="middle" class="m" font-size="11" fill="#1E88E5">PAID / PENDING_MERCHANT</text>
+  </g>
+
+  <!-- Phase 3 cards -->
+  <g>
+    <rect x="652" y="198" width="218" height="94" rx="10" class="card2"/>
+    <text x="668" y="224" class="h" font-size="15">Local recibe</text>
+    <text x="668" y="247" class="b" font-size="12.5">Tablero en vivo, detalle</text>
+    <text x="668" y="267" class="b" font-size="12.5">y comisión calculada</text>
+  </g>
+  <g>
+    <rect x="652" y="312" width="218" height="112" rx="10" class="card2"/>
+    <text x="668" y="338" class="h" font-size="15">Acepta o expira</text>
+    <text x="668" y="361" class="b" font-size="12.5">Aceptación atómica; si no</text>
+    <text x="668" y="381" class="b" font-size="12.5">responde, el cron cancela</text>
+    <text x="668" y="404" class="tag">objetivo: 5 min · reembolso</text>
+  </g>
+  <g>
+    <rect x="652" y="444" width="218" height="84" rx="10" class="card2"/>
+    <text x="668" y="470" class="h" font-size="15">PREPARING</text>
+    <text x="668" y="493" class="b" font-size="12.5">Cocina en curso; ETA</text>
+    <text x="668" y="513" class="b" font-size="12.5">visible para el cliente</text>
+  </g>
+  <g>
+    <rect x="652" y="548" width="218" height="84" rx="10" class="card2"/>
+    <text x="668" y="574" class="h" font-size="15">READY</text>
+    <text x="668" y="597" class="b" font-size="12.5">Listo para retiro o</text>
+    <text x="668" y="617" class="b" font-size="12.5">asignación de repartidor</text>
+  </g>
+  <g>
+    <rect x="652" y="652" width="218" height="88" rx="10" fill="#10151B" stroke="#0ECB81" stroke-width="1.2"/>
+    <text x="668" y="678" class="h" font-size="15" fill="#0ECB81">Reparto propio</text>
+    <text x="668" y="701" class="b" font-size="12.5">El local entrega con su</text>
+    <text x="668" y="721" class="b" font-size="12.5">equipo; no entra al dispatch</text>
+  </g>
+
+  <!-- Phase 4 cards -->
+  <g>
+    <rect x="940" y="198" width="218" height="108" rx="10" class="card2"/>
+    <text x="956" y="224" class="h" font-size="15">Dispatch</text>
+    <text x="956" y="247" class="b" font-size="12.5">Score por distancia, rating,</text>
+    <text x="956" y="267" class="b" font-size="12.5">aceptación y carga</text>
+    <text x="956" y="290" class="tag">oferta con timeout de 30 s</text>
+  </g>
+  <g>
+    <rect x="940" y="326" width="218" height="88" rx="10" class="card2"/>
+    <text x="956" y="352" class="h" font-size="15">Repartidor acepta</text>
+    <text x="956" y="375" class="b" font-size="12.5">COURIER_ASSIGNED;</text>
+    <text x="956" y="395" class="b" font-size="12.5">se revela la dirección</text>
+  </g>
+  <g>
+    <rect x="940" y="434" width="218" height="100" rx="10" class="card2"/>
+    <text x="956" y="460" class="h" font-size="15">Retiro con PIN</text>
+    <text x="956" y="483" class="b" font-size="12.5">El local entrega el pedido</text>
+    <text x="956" y="503" class="b" font-size="12.5">contra el PIN de retiro</text>
+    <text x="956" y="524" class="tag">PICKED_UP</text>
+  </g>
+  <g>
+    <rect x="940" y="554" width="218" height="104" rx="10" class="card2"/>
+    <text x="956" y="580" class="h" font-size="15">Entrega con PIN</text>
+    <text x="956" y="603" class="b" font-size="12.5">El cliente confirma el</text>
+    <text x="956" y="623" class="b" font-size="12.5">código; PIN bloqueado</text>
+    <text x="956" y="646" class="tag">5 intentos fallidos</text>
+  </g>
+  <g>
+    <rect x="940" y="678" width="218" height="62" rx="10" fill="#10151B" stroke="#FF7A1A" stroke-width="1.2"/>
+    <text x="956" y="703" class="h" font-size="14" fill="#FF7A1A">Ganancias</text>
+    <text x="956" y="725" class="b" font-size="12">base + km + espera</text>
+  </g>
+
+  <!-- Phase 5 cards -->
+  <g>
+    <rect x="1228" y="198" width="196" height="92" rx="10" class="card2"/>
+    <text x="1244" y="224" class="h" font-size="15">DELIVERED</text>
+    <text x="1244" y="247" class="b" font-size="12.5">Entrega confirmada y</text>
+    <text x="1244" y="267" class="b" font-size="12.5">pago efectivo cobrado</text>
+  </g>
+  <g>
+    <rect x="1228" y="310" width="196" height="92" rx="10" class="card2"/>
+    <text x="1244" y="336" class="h" font-size="15">Calificación</text>
+    <text x="1244" y="359" class="b" font-size="12.5">Local y repartidor;</text>
+    <text x="1244" y="379" class="b" font-size="12.5">promedio actualizado</text>
+  </g>
+  <g>
+    <rect x="1228" y="422" width="196" height="92" rx="10" class="card2"/>
+    <text x="1244" y="448" class="h" font-size="15">COMPLETED</text>
+    <text x="1244" y="471" class="b" font-size="12.5">Pedido cerrado;</text>
+    <text x="1244" y="491" class="b" font-size="12.5">evento append-only</text>
+  </g>
+  <g>
+    <rect x="1228" y="534" width="196" height="112" rx="10" class="card2"/>
+    <text x="1244" y="560" class="h" font-size="15">Dinero</text>
+    <text x="1244" y="583" class="b" font-size="12.5">Liquidación semanal;</text>
+    <text x="1244" y="603" class="b" font-size="12.5">reembolso vía pasarela</text>
+    <text x="1244" y="626" class="tag">cancelación · disputa</text>
+  </g>
+  <g>
+    <rect x="1228" y="666" width="196" height="74" rx="10" fill="#10151B" stroke="#848E9C" stroke-opacity="0.5"/>
+    <text x="1244" y="692" class="h" font-size="14">Auditoría</text>
+    <text x="1244" y="714" class="b" font-size="12">cada actor y transición</text>
+    <text x="1244" y="732" class="tag">OrderEvent + AuditLog</text>
+  </g>
+
+  <!-- flow arrows between phases -->
+  <path d="M316 560 H340" stroke="#848E9C" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M604 560 H628" stroke="#848E9C" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M892 560 H916" stroke="#848E9C" stroke-width="2" marker-end="url(#a2)"/>
+  <path d="M1180 560 H1204" stroke="#848E9C" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- bottom state strip -->
+  <rect x="54" y="790" width="1392" height="150" rx="16" fill="#10151B" stroke="#2B3139"/>
+  <text x="76" y="820" class="h" font-size="15">Estados canónicos del pedido</text>
+  <text x="76" y="842" class="b" font-size="12.5">Camino feliz y excepciones. La UI muestra un subconjunto; la base conserva el historial completo.</text>
+
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5">
+    <rect x="76" y="858" width="92" height="26" rx="6" fill="#1E2329" stroke="#2B3139"/><text x="122" y="875" text-anchor="middle" fill="#C7D0DA">DRAFT</text>
+    <rect x="176" y="858" width="132" height="26" rx="6" fill="#1E2329" stroke="#F0B90B" stroke-opacity="0.5"/><text x="242" y="875" text-anchor="middle" fill="#F0B90B">PENDING_PAYMENT</text>
+    <rect x="316" y="858" width="62" height="26" rx="6" fill="#1E2329" stroke="#1E88E5" stroke-opacity="0.5"/><text x="347" y="875" text-anchor="middle" fill="#1E88E5">PAID</text>
+    <rect x="386" y="858" width="140" height="26" rx="6" fill="#1E2329" stroke="#1E88E5" stroke-opacity="0.5"/><text x="456" y="875" text-anchor="middle" fill="#1E88E5">PENDING_MERCHANT</text>
+    <rect x="534" y="858" width="78" height="26" rx="6" fill="#1E2329" stroke="#0ECB81" stroke-opacity="0.5"/><text x="573" y="875" text-anchor="middle" fill="#0ECB81">ACCEPTED</text>
+    <rect x="620" y="858" width="88" height="26" rx="6" fill="#1E2329" stroke="#0ECB81" stroke-opacity="0.5"/><text x="664" y="875" text-anchor="middle" fill="#0ECB81">PREPARING</text>
+    <rect x="716" y="858" width="60" height="26" rx="6" fill="#1E2329" stroke="#0ECB81" stroke-opacity="0.5"/><text x="746" y="875" text-anchor="middle" fill="#0ECB81">READY</text>
+    <rect x="784" y="858" width="128" height="26" rx="6" fill="#1E2329" stroke="#FF7A1A" stroke-opacity="0.5"/><text x="848" y="875" text-anchor="middle" fill="#FF7A1A">PENDING_COURIER</text>
+    <rect x="920" y="858" width="146" height="26" rx="6" fill="#1E2329" stroke="#FF7A1A" stroke-opacity="0.5"/><text x="993" y="875" text-anchor="middle" fill="#FF7A1A">COURIER_ASSIGNED</text>
+    <rect x="1074" y="858" width="84" height="26" rx="6" fill="#1E2329" stroke="#FF7A1A" stroke-opacity="0.5"/><text x="1116" y="875" text-anchor="middle" fill="#FF7A1A">PICKED_UP</text>
+    <rect x="1166" y="858" width="76" height="26" rx="6" fill="#1E2329" stroke="#C7D0DA" stroke-opacity="0.5"/><text x="1204" y="875" text-anchor="middle" fill="#C7D0DA">DELIVERED</text>
+    <rect x="1250" y="858" width="80" height="26" rx="6" fill="#1E2329" stroke="#C7D0DA" stroke-opacity="0.5"/><text x="1290" y="875" text-anchor="middle" fill="#C7D0DA">COMPLETED</text>
+  </g>
+
+  <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10">
+    <rect x="76" y="896" width="104" height="24" rx="6" fill="#1E2329" stroke="#F6465D" stroke-opacity="0.45"/><text x="128" y="912" text-anchor="middle" fill="#F6465D">CANCELLED_*</text>
+    <rect x="188" y="896" width="72" height="24" rx="6" fill="#1E2329" stroke="#F6465D" stroke-opacity="0.45"/><text x="224" y="912" text-anchor="middle" fill="#F6465D">EXPIRED</text>
+    <rect x="268" y="896" width="88" height="24" rx="6" fill="#1E2329" stroke="#F6465D" stroke-opacity="0.45"/><text x="312" y="912" text-anchor="middle" fill="#F6465D">REFUNDED</text>
+    <rect x="364" y="896" width="82" height="24" rx="6" fill="#1E2329" stroke="#F6465D" stroke-opacity="0.45"/><text x="405" y="912" text-anchor="middle" fill="#F6465D">DISPUTED</text>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 160" width="560" height="160" role="img" aria-labelledby="title desc">
+  <title id="title">MesaCerca</title>
+  <desc id="desc">Marca de MesaCerca: una mesa con un pin de cercanía y el wordmark de la plataforma.</desc>
+  <defs>
+    <linearGradient id="markBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8D12F"/>
+      <stop offset="1" stop-color="#F0B90B"/>
+    </linearGradient>
+    <linearGradient id="markInk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#151A21"/>
+      <stop offset="1" stop-color="#0B0E11"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="160" rx="24" fill="#0B0E11"/>
+  <rect x="24" y="24" width="112" height="112" rx="26" fill="url(#markBg)"/>
+  <circle cx="80" cy="70" r="25" fill="none" stroke="url(#markInk)" stroke-width="7"/>
+  <path d="M80 52c-7 0-12 5-12 12 0 9 12 22 12 22s12-13 12-22c0-7-5-12-12-12Z" fill="url(#markInk)"/>
+  <circle cx="80" cy="64" r="4.2" fill="#F0B90B"/>
+  <path d="M44 96h72" stroke="url(#markInk)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M54 96v18M106 96v18" stroke="url(#markInk)" stroke-width="7" stroke-linecap="round"/>
+  <text x="164" y="86" font-family="Manrope, Inter, 'Segoe UI', Arial, sans-serif" font-size="53" font-weight="800" letter-spacing="-1.6" fill="#EAECEF">Mesa<tspan fill="#F0B90B">Cerca</tspan></text>
+  <text x="166" y="114" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="2.8" fill="#848E9C">COMIDA LOCAL · SANTIAGO</text>
+</svg>

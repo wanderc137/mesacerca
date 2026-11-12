@@ -1,0 +1,71 @@
+{
+  "name": "mesacerca",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node scripts/check-env.mjs && next start",
+    "lint": "eslint",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:reset": "prisma db push --force-reset && prisma db seed",
+    "db:studio": "prisma studio",
+    "security:audit": "node scripts/security-audit.mjs",
+    "security:env": "node scripts/check-env.mjs",
+    "kyc:strict-workflow": "node scripts/create-didit-strict-workflow.mjs",
+    "kyc:harden-workflow": "node scripts/harden-didit-workflow.mjs",
+    "security:retention": "node scripts/anonymize-pii.mjs",
+    "db:local:start": "bash scripts/local-postgres.sh start",
+    "db:local:stop": "bash scripts/local-postgres.sh stop",
+    "db:backup": "bash scripts/backup-postgres.sh",
+    "platform:start": "bash scripts/platform-start.sh",
+    "platform:stop": "bash scripts/platform-stop.sh",
+    "platform:status": "bash scripts/platform-status.sh",
+    "platform:restart": "bash scripts/platform-restart.sh"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
+    "image-size": "^2.1.0",
+    "jose": "^6.2.15",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.70.0",
+    "mercadopago": "^3.6.1",
+    "next": "16.4.5",
+    "otplib": "^13.6.0",
+    "qrcode": "^1.5.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.7.0",
+    "transbank-sdk": "^6.1.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^20",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^18.0.9",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "playwright": "^1.65.0",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.2",
+    "minimatch": "^11.0.1"
+  }
+}
