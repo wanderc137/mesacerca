@@ -603,3 +603,55 @@ Copyright (c) 2026 wanderc137
 MesaCerca
 
 </div>
+
+## Ficha de evaluación
+
+**Madurez global: 3.8/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 4/5 | MVP verificado con build, lint, TypeScript y smoke de cuatro roles; 23 documentos y dos auditorías que registran 20 problemas corregidos. Pagos y KYC en sandbox. |
+| Reproducibilidad | 2/5 | La copia publicada es sanitizada: lib/, components/, prisma/schema.prisma, scripts/, deploy/ y mobile/src/ aparecen vacíos o no están, así que no se puede compilar sin el árbol original. |
+| Documentación | 5/5 | README de 40 KB, 23 documentos en docs/ (investigación, arquitectura, QA, auditorías, despliegue), datasheet de 21 KB y developer de 35 KB. |
+| Honestidad de límites | 5/5 | Tabla de 14 áreas con lo que falta antes de operar con dinero real, incluida la advertencia de que documentar el despliegue no es desplegar. |
+| Valor demostrativo | 5/5 | RBAC con MFA y tokenVersion, webhooks firmados con idempotencia, aceptación atómica, PIN con 5 intentos y dinero en enteros CLP recalculado en servidor. |
+| Facilidad de despliegue | 2/5 | Requiere Node 22, PostgreSQL 18, credenciales de Mercado Pago, Transbank y Didit; no hay VPS ni dominio y el Docker está documentado, no ejecutado. |
+
+Sirve como caso de estudio de marketplace con seguridad y operación modeladas, y para equipos que quieran reutilizar patrones de autorización e idempotencia. La limitación que más pesa es que la copia publicada no compila y que nada se desplegó en producción.
+
+## Lo que no funcionó
+
+### MVP · base de datos — SQLite en desarrollo, PostgreSQL en producción
+
+El MVP inicial podía correr con SQLite, que no representa concurrencia, TLS ni migraciones reales. Se adoptó PostgreSQL 18 con Prisma y migraciones versionadas desde el inicio para no descubrir las diferencias tarde.
+
+### auditoría 1 · reparto — Doble aceptación de un pedido
+
+Dos repartidores podían aceptar el mismo pedido porque la comprobación de estado y la escritura no eran atómicas. Se hizo aceptación condicional en transacción y el segundo request recibe conflicto, con una prueba específica de doble aceptación.
+
+### auditoría 1 · privacidad — Fuga de dirección antes de aceptar la oferta
+
+El payload de la oferta incluía la dirección exacta del cliente para facilitar la decisión. Ahora la oferta muestra zona o referencia aproximada y revela la dirección exacta solo después de aceptar.
+
+### auditoría 2 · MFA — Bypass de MFA en el login móvil
+
+El login de la app no consultaba mfaEnabled, así que una cuenta con MFA entraba sin segundo factor. Se optó por rechazar cuentas con MFA en móvil con un 403 explícito, en lugar de ignorar la política.
+
+## Preguntas típicas
+
+**¿Qué es MesaCerca?**
+
+Una plataforma de pedidos y reparto de comida local para Santiago: cliente, local, repartidor y administración sobre un monolito Next.js con PostgreSQL, más una app Expo.
+
+**¿Se puede usar con dinero real?**
+
+No todavía. Pagos y KYC están en sandbox, faltan credenciales productivas, boleta electrónica, monitoreo, backups probados y pentest externo.
+
+**¿Cómo se ejecuta?**
+
+Con el árbol de runtime original: Node 22, PostgreSQL 18, migraciones de Prisma y variables de entorno; la copia publicada omite directorios necesarios para compilar.
+
+**¿Qué se puede reutilizar?**
+
+El modelo de roles y pertenencia, la aceptación atómica de pedidos, la verificación de webhooks con idempotencia y el preflight que rechaza credenciales de integración en producción.
+
